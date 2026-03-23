@@ -4,6 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>₿</text></svg>">
   <title>Bitcoin Biel/Bienne</title>
   <meta name="description" content="Bitcoin meetup group in Biel/Bienne, Switzerland. Every last Thursday of the month.">
   <style>
@@ -85,6 +88,12 @@
       border-radius: 50%;
       margin-bottom: 1.5rem;
       border: 3px solid var(--btc-orange);
+      object-fit: cover;
+      background: var(--card-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
     }
 
     h1 {
@@ -147,6 +156,7 @@
       color: var(--btc-orange);
       text-decoration: none;
       font-weight: 600;
+      word-break: break-word;
     }
 
     .card a:hover {
@@ -243,12 +253,44 @@
     }
 
     /* Nostr Embed */
-    #nostr-embed {
+    #nostr-timeline {
       margin-bottom: 3rem;
       background: var(--card-bg);
       border-radius: 16px;
       padding: 1.5rem;
       color: var(--btc-dark);
+      min-height: 100px;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+    }
+
+    #nostr-timeline a {
+      word-break: break-word;
+    }
+
+    .nostr-loading, .nostr-error {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+    }
+
+    .nostr-loading .spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 3px solid var(--card-border);
+      border-top-color: var(--btc-orange);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 0.5rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .nostr-error {
+      color: #e74c3c;
     }
 
     /* Past Events */
@@ -382,15 +424,16 @@
   </button>
   <div class="container">
     <header>
-      <img src="https://image.nostr.build/19653bc1e8d05270a620992db27f765ef5ee642179cb020dd9d9a88951763035.jpg" alt="Bitcoin Biel/Bienne Logo" class="logo">
+      <img src="https://image.nostr.build/19653bc1e8d05270a620992db27f765ef5ee642179cb020dd9d9a88951763035.jpg" alt="Bitcoin Biel/Bienne Logo" class="logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="logo" style="display:none">₿</div>
       <h1>Bitcoin <span>Biel/Bienne</span></h1>
       <p class="subtitle">Every last Thursday of the Month in Biel/Bienne — All about Bitcoin tech</p>
       
       <div class="contact-links">
-        <a href="https://t.me/+M3KFrnmQ3vRlMTE0" class="contact-btn">
+        <a href="https://t.me/+M3KFrnmQ3vRlMTE0" class="contact-btn" target="_blank" rel="noopener noreferrer">
           <span>📱</span> Telegram
         </a>
-        <a href="https://njump.me/nprofile1qqsz9vvsrq223q0vep5cj8k0p4h2gdxmaa96pnjjs4s6mf27g5cy5yq3hw2d9" class="contact-btn">
+        <a href="https://njump.me/nprofile1qqsz9vvsrq223q0vep5cj8k0p4h2gdxmaa96pnjjs4s6mf27g5cy5yq3hw2d9" class="contact-btn" target="_blank" rel="noopener noreferrer">
           <span>⚡</span> Bitcoin Biel/Bienne
         </a>
       </div>
@@ -399,9 +442,9 @@
     <div class="info-grid">
       <div class="card">
         <h3>📍 Location</h3>
-        <p><a href="https://www.p15.space">P15 CoWorking</a></p>
+        <p><a href="https://www.p15.space" target="_blank" rel="noopener noreferrer">P15 CoWorking</a></p>
         <p>Johan Aberli 15, 2503 Biel/Bienne</p>
-        <p><a href="https://www.openstreetmap.org/node/10210421015">OpenStreetMap</a></p>
+        <p><a href="https://www.openstreetmap.org/node/10210421015" target="_blank" rel="noopener noreferrer">OpenStreetMap</a></p>
       </div>
       
       <div class="card">
@@ -420,18 +463,23 @@
       <span class="event-date">Thursday, March 26, 2026</span>
       <h3>Cashu: Introduction to E-Cash</h3>
       <p><span class="highlight">18:30</span> — Bitcoin basic for beginners (on request)</p>
-      <p><span class="highlight">19:30</span> — Cashu: Introduction to private e-cash by <a href="https://primal.net/p/nprofile1qqsdmcway2x3nxpmxhcpls49zpsplswuy5upgdpyls924kz973q6xwsqcg7eq">Arándano</a> (English)</p>
-      <p><span class="highlight">CHF 12.--</span> (drink included)</p>
-      <p>📍 <a href="https://www.p15.space">P15 CoNetWorking</a> — Johan Aberli 15, 2503 Biel/Bienne</p>
+      <p><span class="highlight">19:30</span> — Cashu: Introduction to private e-cash by <a href="https://primal.net/p/nprofile1qqsdmcway2x3nxpmxhcpls49zpsplswuy5upgdpyls924kz973q6xwsqcg7eq" target="_blank" rel="noopener noreferrer">Arándano</a> (English)</p>
+      <p><span class="highlight">CHF 12.--</span> (one drink included)</p>
+      <p>📍 <a href="https://www.p15.space" target="_blank" rel="noopener noreferrer">P15 CoNetWorking</a> — Johan Aberli 15, 2503 Biel/Bienne</p>
     </div>
 
     <h2 class="section-header">
       <span class="icon">⚡</span> Latest from Nostr
     </h2>
-    <div id="nostr-timeline" style="max-width: 100%; margin-bottom: 2rem; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--card-bg); border-radius: 16px; padding: 1rem;"></div>
+    <div id="nostr-timeline">
+      <div class="nostr-loading">
+        <div class="spinner"></div>
+        <p>Loading from Nostr...</p>
+      </div>
+    </div>
     <script type="module">
       const PUBKEY = "22b1901814a881ecc869891ecf0d6ea434dbef4ba0ce528561ada55e45304a10";
-      const RELAYS = ["wss://relay.damus.io","wss://eden.nostr.land","wss://nostr.rocks"];
+      const RELAYS = ["wss://nos.lol/","wss://relay.damus.io/","wss://relay.nostr.band/","wss://relay.snort.social","wss://relay.nostr.info"];
       const LIMIT = 3;
 
       const BECH = (function(){
@@ -456,8 +504,25 @@
         return arr ? new Uint8Array(arr) : null;
       }
 
+      function bytesToBech(bytes, prefix){
+        const fiveBit = BECH.convert(Array.from(bytes), 8, 5, true);
+        if(!fiveBit) return null;
+        const CHARSET = 'qpzry9x8gf2tvdw0s3jn54khce6mua7l';
+        return prefix + '1' + fiveBit.map(i => CHARSET[i]).join('');
+      }
+
+      function hexToNevent(hexId){
+        const bytes = new Uint8Array(hexId.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+        return bytesToBech(bytes, 'nevent');
+      }
+
       function nprofileToHex(nprofile){
         try{
+          console.log('[NostrWall] Decoding nprofile, length:', nprofile.length);
+          if (nprofile.length > 2000) {
+            console.log('[NostrWall] nprofile too long, skipping');
+            return null;
+          }
           const d = BECH.decodeBech(nprofile);
           if(!d || !d.hrp.startsWith('nprofile')) return null;
           const bytes = bechToBytes(d.data);
@@ -468,88 +533,240 @@
             const l = bytes[i++];
             if(t===0){
               const pk = Array.from(bytes.slice(i,i+l)).map(b=>b.toString(16).padStart(2,'0')).join('');
+              console.log('[NostrWall] Extracted pubkey hex:', pk.slice(0,20)+'...');
               return pk;
             }
             i += l;
           }
           return null;
-        }catch(e){ return null; }
+        }catch(e){ console.log('[NostrWall] nprofile decode error:', e.message); return null; }
       }
 
-      function isNpub(s){ return typeof s==='string' && s.startsWith('npub'); }
-      function isNprofile(s){ return typeof s==='string' && s.startsWith('nprofile'); }
+      function isNpub(s){ 
+        if (s.startsWith('nostr:npub')) s = s.slice(6);
+        return typeof s==='string' && s.startsWith('npub'); 
+      }
+      function isNprofile(s){ 
+        if (s.startsWith('nostr:nprofile')) s = s.slice(6);
+        return typeof s==='string' && s.startsWith('nprofile'); 
+      }
+      
+      function stripNostrPrefix(token) {
+        if (token.startsWith('nostr:')) return token.slice(6);
+        return token;
+      }
       function isHex64(s){ return /^[0-9a-f]{64}$/i.test(s); }
 
       const metaCache = new Map();
-      function fetchMeta(hex){
-        if(metaCache.has(hex)) return;
-        metaCache.set(hex, null);
-        RELAYS.forEach(url=>{
-          try{
+      const metaFetched = new Set();
+      const pendingRenders = new Map();
+
+      async function fetchWithRetry(url, timeout = 2000, retries = 2) {
+        for (let i = 0; i <= retries; i++) {
+          try {
+            const resp = await fetch(url, { signal: AbortSignal.timeout(timeout + i * 1000) });
+            if (resp.ok) return await resp.json();
+          } catch (e) { console.log('[NostrWall] Fetch attempt', i+1, 'failed:', e.message); }
+        }
+        return null;
+      }
+
+      async function fetchMetaHttp(hex) {
+        const apis = [
+          `https://api.nostr.band/v2/profiles/${hex}`,
+          `https://api.nostr.watch/profile/${hex}`,
+          `https://nostrapi.com/api/v1/profile/${hex}`,
+          `https://rbr.bio/api/profiles/${hex}`
+        ];
+        
+        for (const url of apis) {
+          try {
+            console.log('[NostrWall] Trying HTTP:', url);
+            const data = await fetchWithRetry(url);
+            if (!data) continue;
+            console.log('[NostrWall] HTTP response:', JSON.stringify(data).slice(0,200));
+            
+            let m = null;
+            if (data.profile?.content) m = JSON.parse(data.profile.content);
+            else if (data.name) m = data;
+            
+            if (m && (m.name || m.display_name)) {
+              console.log('[NostrWall] Parsed meta:', m);
+              metaCache.set(hex, m);
+              if (pendingRenders.has(hex)) {
+                console.log('[NostrWall] Firing', pendingRenders.get(hex).length, 'callbacks for', hex.slice(0,16));
+                pendingRenders.get(hex).forEach(cb => cb(m));
+                pendingRenders.delete(hex);
+              }
+              return;
+            }
+          } catch (e) { console.log('[NostrWall] HTTP error:', e.message); }
+        }
+        metaCache.set(hex, {});
+        console.log('[NostrWall] All HTTP APIs failed for', hex.slice(0,16));
+      }
+
+      async function fetchMetaViaWS(hex) {
+        if (metaCache.has(hex) && metaCache.get(hex)) return;
+        
+        const subId = 'meta-' + Math.random().toString(36).slice(2);
+        
+        const promises = RELAYS.map(url => new Promise((resolve) => {
+          try {
             const ws = new WebSocket(url);
-            ws.addEventListener('open', ()=> {
-              const sub='m-'+Math.random().toString(36).slice(2);
-              ws.send(JSON.stringify(['REQ', sub, {kinds:[0], authors:[hex], limit:1}]));
+            let done = false;
+            
+            const cleanup = () => { if (!done) { done = true; ws.close(); resolve(); } };
+            
+            ws.addEventListener('open', () => {
+              ws.send(JSON.stringify(['REQ', subId, {kinds:[0], authors:[hex], limit:1}]));
             });
-            ws.addEventListener('message', ev=>{
-              try{
+            
+            ws.addEventListener('message', (ev) => {
+              try {
                 const msg = JSON.parse(ev.data);
-                if(msg[0] !== 'EVENT') return;
-                const e = msg[2];
-                if(e.kind !== 0) return;
-                try{ const m = JSON.parse(e.content||'{}'); metaCache.set(hex, m); }
-                catch(err){ metaCache.set(hex, {}); }
-              }catch(_){} 
+                if (msg[0] === 'EVENT' && msg[2]?.kind === 0 && !done) {
+                  const content = msg[2]?.content;
+                  if (content) {
+                    try {
+                      const m = JSON.parse(content);
+                      console.log('[NostrWall] WS meta for', hex.slice(0,16)+'...', m);
+                      metaCache.set(hex, m);
+                      if (pendingRenders.has(hex)) {
+                        pendingRenders.get(hex).forEach(cb => cb(m));
+                        pendingRenders.delete(hex);
+                      }
+                    } catch {}
+                  }
+                }
+              } catch {}
             });
-            setTimeout(()=>ws.close(),3000);
-          }catch(_){} 
-        });
+            
+            setTimeout(cleanup, 2500);
+          } catch { resolve(); }
+        }));
+        
+        await Promise.allSettled(promises);
+      }
+
+      function fetchMeta(hex, onLoaded) {
+        console.log('[NostrWall] fetchMeta called:', hex, 'hasCallback:', !!onLoaded);
+        
+        if (metaCache.has(hex) && metaCache.get(hex)) {
+          if (onLoaded) onLoaded(metaCache.get(hex));
+          return;
+        }
+        
+        if (onLoaded) {
+          if (!pendingRenders.has(hex)) pendingRenders.set(hex, []);
+          pendingRenders.get(hex).push(onLoaded);
+        }
+        
+        if (!metaFetched.has(hex)) {
+          metaFetched.add(hex);
+          fetchMetaViaWS(hex).then(() => fetchMetaHttp(hex));
+        }
       }
 
       function shortHex(hex){ return hex.slice(0,12)+'...'+hex.slice(-8); }
 
       function maxLength(str, len){ return str.length > len ? str.slice(0, len-3)+'...' : str; }
 
-      function makeProfileLinkFromHex(hex){
-        fetchMeta(hex);
-        const meta = metaCache.get(hex);
-        const name = meta && (meta.name || meta.display_name) ? escapeHtml(meta.name||meta.display_name) : escapeHtml(shortHex(hex));
-        const display = maxLength(name, 80);
-        return `<a href="https://primal.net/p/${hex}" target="_blank" rel="noopener noreferrer" style="color: #f7931a;">${display}</a>`;
+      function makeProfileLinkFromHex(hex, fallbackDisplay){
+        console.log('[NostrWall] makeProfileLinkFromHex:', hex);
+        const id = fallbackDisplay || escapeHtml(shortHex(hex));
+        const display = maxLength(id, 60);
+        
+        fetchMeta(hex, (meta) => {
+          console.log('[NostrWall] Callback for', hex, 'meta:', meta);
+          if (meta && (meta.name || meta.display_name)) {
+            const link = document.querySelector(`a[data-hex="${hex}"]`);
+            console.log('[NostrWall] Updating link to:', meta.name || meta.display_name);
+            if (link) {
+              link.textContent = maxLength(escapeHtml(meta.name || meta.display_name), 60);
+            }
+          }
+        });
+        
+        return `<a href="https://primal.net/p/${hex}" target="_blank" rel="noopener noreferrer" data-hex="${hex}" style="color: #f7931a; word-break: break-word;">${display}</a>`;
+      }
+
+      function makeNpubLink(npub){
+        const hex = npubToHex(npub);
+        const display = maxLength(escapeHtml(npub.slice(0, 30) + '...'), 60);
+        
+        fetchMeta(hex, (meta) => {
+          if (meta && (meta.name || meta.display_name)) {
+            const link = document.querySelector(`a[data-hex="${hex}"]`);
+            if (link) {
+              link.textContent = maxLength(escapeHtml(meta.name || meta.display_name), 60);
+            }
+          }
+        });
+        
+        return `<a href="https://primal.net/p/${npub}" target="_blank" rel="noopener noreferrer" data-hex="${hex}" style="color: #f7931a; word-break: break-word;">${display}</a>`;
+      }
+
+      function npubToHex(npub){
+        try{
+          const d = BECH.decodeBech(npub);
+          if(!d || !d.hrp.startsWith('npub')) return npub;
+          const bytes = bechToBytes(d.data);
+          if(!bytes) return npub;
+          return Array.from(bytes).map(b=>b.toString(16).padStart(2,'0')).join('');
+        }catch(e){ return npub; }
       }
 
       function escapeHtml(s){ return String(s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
 
       function processContent(text){
         return escapeHtml(text)
-          .replace(/(nprofile[0-9a-z]+|npub[0-9a-z]+|\b[0-9a-f]{64}\b)/ig, (m)=>{
-            const token = m.trim();
+          .replace(/(nostr:)?(nprofile[0-9a-z]+|npub[0-9a-z]+|\b[0-9a-f]{64}\b)/ig, (m)=>{
+            let token = m.trim();
+            if (token.startsWith('nostr:')) token = token.slice(6);
+            
             if(isNprofile(token)){
               const hex = nprofileToHex(token);
-              if(hex) return makeProfileLinkFromHex(hex);
-              return escapeHtml(token);
+              if(hex) return makeProfileLinkFromHex(hex, token.slice(0, 20) + '...');
+              console.log('[NostrWall] Failed to decode nprofile:', token.slice(0,50));
+              // Direct link to primal without decoding
+              const short = token.slice(0, 24) + '...';
+              return `<a href="https://primal.net/p/${token}" target="_blank" rel="noopener noreferrer" style="color: #f7931a; word-break: break-word;">${short} 🔒⚡</a>`;
             }
             if(isNpub(token)){
-              return `<a href="https://primal.net/p/${token}" target="_blank" rel="noopener noreferrer" style="color: #f7931a;">${escapeHtml(token)}</a>`;
+              return makeNpubLink(token);
             }
             if(isHex64(token)){
               return makeProfileLinkFromHex(token.toLowerCase());
             }
             return escapeHtml(token);
           })
-          .replace(/(https?:\/\/[^\s]+)/g, url => `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" style="color: #f7931a;">${escapeHtml(url)}</a>`)
           .replace(/\n/g,'<br>');
       }
 
       function createItem(ev){
         const time = new Date(ev.created_at*1000).toLocaleString();
         const noteLink = `https://primal.net/e/${ev.id}`;
-        const authorLink = (()=>{ const display = escapeHtml(shortHex(PUBKEY)); return `<a href="https://primal.net/p/${PUBKEY}" target="_blank" rel="noopener noreferrer" style="color: #f7931a;">${display}</a>` })();
+        
+        const meta = metaCache.get(PUBKEY);
+        const initialName = meta && (meta.name || meta.display_name) ? escapeHtml(meta.name||meta.display_name) : escapeHtml(shortHex(PUBKEY));
+        
+        const authorLinkHtml = `<a href="https://primal.net/p/${PUBKEY}" target="_blank" rel="noopener noreferrer" data-author="true" style="color: #f7931a; word-break: break-word;">${maxLength(initialName, 80)}</a>`;
+        
+        fetchMeta(PUBKEY, (m) => {
+          if (m && (m.name || m.display_name)) {
+            const link = document.querySelector(`a[href="https://primal.net/p/${PUBKEY}"][data-author="true"]`);
+            if (link) {
+              link.textContent = maxLength(escapeHtml(m.name || m.display_name), 80);
+            }
+          }
+        });
+        
         const contentHtml = processContent(ev.content||'');
         const html = `
           <article id="note-${ev.id}" style="padding:12px;border-bottom:1px solid var(--card-border)">
-            <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px">${time} — ${authorLink}</div>
-            <div style="margin-bottom:8px;line-height:1.4;color:var(--text-light)">${contentHtml}</div>
+            <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px">${time} — ${authorLinkHtml}</div>
+            <div style="margin-bottom:8px;line-height:1.4;color:var(--text-light);word-break:break-word">${contentHtml}</div>
             <div style="display:flex;gap:8px">
               <button data-action="reply" style="padding:6px 10px;border:1px solid var(--card-border);background:var(--card-bg);border-radius:6px;cursor:pointer;color:var(--text-light)">Reply</button>
               <button data-action="boost" style="padding:6px 10px;border:1px solid var(--card-border);background:var(--card-bg);border-radius:6px;cursor:pointer;color:var(--text-light)">Boost</button>
@@ -568,10 +785,22 @@
 
       const container = document.getElementById('nostr-timeline');
       const seen = new Set();
+      fetchMeta(PUBKEY);
+      let loaded = false;
+      let timeoutId = setTimeout(() => {
+        if (!loaded) {
+          container.innerHTML = '<div class="nostr-error">Unable to load from Nostr. <a href="https://primal.net/p/' + PUBKEY + '" target="_blank" rel="noopener noreferrer" style="color:#f7931a">View on Primal</a></div>';
+        }
+      }, 5000);
+
       RELAYS.forEach(url=>{
         try{
           const ws = new WebSocket(url);
-          ws.addEventListener('open', ()=> ws.send(JSON.stringify(['REQ','sub-'+Math.random().toString(36).slice(2),{kinds:[1],authors:[PUBKEY],limit:LIMIT}])));
+          ws.addEventListener('open', ()=> {
+            loaded = true;
+            clearTimeout(timeoutId);
+            ws.send(JSON.stringify(['REQ','sub-'+Math.random().toString(36).slice(2),{kinds:[1],authors:[PUBKEY],limit:LIMIT}]));
+          });
           ws.addEventListener('message', e=>{
             try{
               const msg = JSON.parse(e.data); if(msg[0] !== 'EVENT') return;
@@ -605,7 +834,7 @@
     </h2>
     <div class="card" style="margin-bottom: 3rem;">
       <p>Suggest and vote for projects and ideas</p>
-      <a href="https://feedback.userreport.com/82d937f0-b7eb-48d2-91cf-da3b5b4c7fcd/" class="contact-btn dark-text" style="margin-top: 1rem;">
+      <a href="https://github.com/silent-nox/silent-nox.github.io/issues/new/choose" class="contact-btn dark-text" style="margin-top: 1rem;" target="_blank" rel="noopener noreferrer">
         <span>📝</span> Give Feedback
       </a>
     </div>
@@ -617,7 +846,7 @@
         <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=LNURL1DP68GURN8GHJ7AMPD3KX2AR0VEEKZAR0WD5XJTNRDAKJ7TNHV4KXCTTTDEHHWM30D3H82UNVWQHKSATJWF5K2ERNW3EX2CTD8Q6S9M03Y9" alt="Lightning QR Code">
       </div>
       <p class="lnurl">
-        <a href="lightning:LNURL1DP68GURN8GHJ7AMPD3KX2AR0VEEKZAR0WD5XJTNRDAKJ7TNHV4KXCTTTDEHHWM30D3H82UNVWQHKSATJWF5K2ERNW3EX2CTD8Q6S9M03Y9">LNURL1DP68GURN8GHJ7AMPD3KX2AR0VEEKZAR0WD5XJTNRDAKJ7TNHV4KXCTTTDEHHWM30D3H82UNVWQHKSATJWF5K2ERNW3EX2CTD8Q6S9M03Y9</a>
+        <a href="lightning:LNURL1DP68GURN8GHJ7AMPD3KX2AR0VEEKZAR0WD5XJTNRDAKJ7TNHV4KXCTTTDEHHWM30D3H82UNVWQHKSATJWF5K2ERNW3EX2CTD8Q6S9M03Y9">https://www.bitcoin-biel.ch/</a>
       </p>
     </div>
 
@@ -627,6 +856,24 @@
   </div>
 
   <script>
+    (function() {
+      const html = document.documentElement;
+      const icon = document.getElementById('theme-icon');
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      if (savedTheme === 'light') {
+        html.setAttribute('data-theme', 'light');
+        icon.textContent = '☀️';
+      } else if (savedTheme === 'dark') {
+        html.removeAttribute('data-theme');
+        icon.textContent = '🌙';
+      } else if (!prefersDark) {
+        html.setAttribute('data-theme', 'light');
+        icon.textContent = '☀️';
+      }
+    })();
+
     function toggleTheme() {
       const html = document.documentElement;
       const icon = document.getElementById('theme-icon');
@@ -640,13 +887,6 @@
         icon.textContent = '☀️';
         localStorage.setItem('theme', 'light');
       }
-    }
-
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-      document.documentElement.setAttribute('data-theme', 'light');
-      document.getElementById('theme-icon').textContent = '☀️';
     }
   </script>
 </body>
