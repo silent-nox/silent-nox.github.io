@@ -1,82 +1,654 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bitcoin Biel Bienne</title>
-  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+  <title>Bitcoin Biel/Bienne</title>
+  <meta name="description" content="Bitcoin meetup group in Biel/Bienne, Switzerland. Every last Thursday of the month.">
+  <style>
+    :root {
+      --btc-orange: #f7931a;
+      --btc-dark: #1a1a1a;
+      --btc-gray: #2d2d2d;
+      --text-light: #e0e0e0;
+      --text-muted: #888;
+      --card-bg: #2d2d2d;
+      --card-border: #444;
+      --bg-gradient-start: #1a1a1a;
+      --bg-gradient-end: #0d0d0d;
+    }
+
+    [data-theme="light"] {
+      --text-light: #1a1a1a;
+      --text-muted: #555;
+      --card-bg: #ffffff;
+      --card-border: #ddd;
+      --bg-gradient-start: #ffffff;
+      --bg-gradient-end: #f0f0f0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+      color: var(--text-light);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1000;
+      background: var(--btc-orange);
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      transition: transform 0.3s ease, background 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 3rem 0;
+      border-bottom: 2px solid var(--btc-orange);
+      margin-bottom: 3rem;
+    }
+
+    .logo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 1.5rem;
+      border: 3px solid var(--btc-orange);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    [data-theme="light"] h1 {
+      color: #1a1a1a;
+    }
+
+    h1 span {
+      color: var(--btc-orange);
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Info Cards */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 1.5rem;
+      color: var(--text-light);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      color: var(--btc-orange);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card p {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card a {
+      color: var(--btc-orange);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .card a:hover {
+      text-decoration: underline;
+    }
+
+    /* Contact Links */
+    .contact-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      background: var(--btc-orange);
+      color: #fff;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .contact-btn:hover {
+      background: #e88a0f;
+      transform: scale(1.05);
+    }
+
+    .contact-btn.dark-text {
+      color: #1a1a1a;
+    }
+
+    /* Section Headers */
+    .section-header {
+      font-size: 1.8rem;
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--btc-orange);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-header .icon {
+      font-size: 1.5rem;
+    }
+
+    /* Event Card */
+    .event-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 2rem;
+      border: 2px solid var(--btc-orange);
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .event-date {
+      display: inline-block;
+      background: var(--btc-orange);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .event-card h3 {
+      font-size: 1.6rem;
+      color: var(--text-light);
+      margin-bottom: 1rem;
+    }
+
+    .event-card p {
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-light);
+    }
+
+    .event-card .highlight {
+      color: var(--btc-orange);
+      font-weight: 600;
+    }
+
+    .event-card a {
+      color: var(--btc-orange);
+    }
+
+    /* Nostr Embed */
+    #nostr-embed {
+      margin-bottom: 3rem;
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 1.5rem;
+      color: var(--btc-dark);
+    }
+
+    /* Past Events */
+    .past-events {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 1.5rem;
+      color: var(--btc-dark);
+      margin-bottom: 3rem;
+    }
+
+    .past-events ul {
+      list-style: none;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .past-events li {
+      padding: 0.75rem 1rem;
+      background: rgba(128,128,128,0.1);
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1rem;
+      color: var(--text-light);
+    }
+
+    .past-events .date {
+      color: var(--btc-orange);
+      font-weight: 600;
+      min-width: 120px;
+    }
+
+    .past-events a {
+      color: var(--text-light);
+      text-decoration: none;
+    }
+
+    .past-events a:hover {
+      text-decoration: underline;
+    }
+
+    /* Sats Section */
+    .sats-section {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 2.5rem;
+      text-align: center;
+      border: 2px solid var(--btc-orange);
+      color: var(--text-light);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .sats-section h2 {
+      font-size: 1.8rem;
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .sats-section p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .qr-container {
+      display: inline-block;
+      padding: 1rem;
+      background: #fff;
+      border-radius: 16px;
+      margin-bottom: 1rem;
+    }
+
+    .qr-container img {
+      display: block;
+    }
+
+    .lnurl {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      word-break: break-all;
+      max-width: 250px;
+      margin: 0 auto;
+    }
+
+    .lnurl a {
+      color: var(--btc-orange);
+      text-decoration: none;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--card-border);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .past-events li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+      }
+
+      .contact-links {
+        flex-direction: column;
+      }
+
+      .contact-btn {
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 
-<body class="stackedit">
-  <div class="stackedit__left">
-    <div class="stackedit__toc">
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+    <span id="theme-icon">🌙</span>
+  </button>
+  <div class="container">
+    <header>
+      <img src="https://image.nostr.build/19653bc1e8d05270a620992db27f765ef5ee642179cb020dd9d9a88951763035.jpg" alt="Bitcoin Biel/Bienne Logo" class="logo">
+      <h1>Bitcoin <span>Biel/Bienne</span></h1>
+      <p class="subtitle">Every last Thursday of the Month in Biel/Bienne — All about Bitcoin tech</p>
       
-        <ul>
-            <li><a href="#bitcoinbielbienne">Bitcoin Biel/Bienne</a>
-                <ul>
-                    <li><a href="#contact">contact</a></li>
-                    <li><a href="#upcoming-events">upcoming events</a></li>
-                    <li><a href="#past-events">past events</a></li>
-                    <li><a href="#projects-ideas">projects and ideas</a></li>
-                    <li><a href="#sats-fund-us">sats fund us</a></li>
-                </ul>
-            </li>
-        </ul>
-          
+      <div class="contact-links">
+        <a href="https://t.me/+M3KFrnmQ3vRlMTE0" class="contact-btn">
+          <span>📱</span> Telegram
+        </a>
+        <a href="https://njump.me/nprofile1qqsz9vvsrq223q0vep5cj8k0p4h2gdxmaa96pnjjs4s6mf27g5cy5yq3hw2d9" class="contact-btn">
+          <span>⚡</span> Bitcoin Biel/Bienne
+        </a>
+      </div>
+    </header>
+
+    <div class="info-grid">
+      <div class="card">
+        <h3>📍 Location</h3>
+        <p><a href="https://www.p15.space">P15 CoWorking</a></p>
+        <p>Johan Aberli 15, 2503 Biel/Bienne</p>
+        <p><a href="https://www.openstreetmap.org/node/10210421015">OpenStreetMap</a></p>
+      </div>
+      
+      <div class="card">
+        <h3>🕐 Schedule</h3>
+        <p><strong>18:30</strong> — Intro talks for Bitcoin explorers</p>
+        <p><strong>19:30</strong> — Specialists talk and workshops</p>
+        <p><a href="#upcoming-event">See Upcoming Event →</a></p>
+      </div>
     </div>
-  </div>
-  <div class="stackedit__right">
-    <div class="stackedit__html">
-        <h1 id="bitcoinbielbienne">Bitcoin Biel/Bienne</h1>
-        <div>
-          <p>Every last Thursdays in Biel/Bienne: all about Bitcoin tech.</p>
-          <p>Location: <a href="https://www.p15.space">P15 CoWorking</a> // <a href="https://www.openstreetmap.org/node/10210421015">OpenStreetMap.org</a></p>
-          <p>Schedule:</p>
-          <ul>
-            <li>18.30 - Intro talks for Bitcoin explorers</li>
-            <li>19.30 - Specialists talk and workshops</li>
-          </ul>
-              </div>
-        <h2 id="contact">contact</h2>
-        <h5 id="telegram"><a href="https://t.me/+M3KFrnmQ3vRlMTE0">Telegram</a>: <code>Bitcoin Biel/Bienne</code></h5>
-        <h5 id="nostr"><a>Nostr</a>: <code>npub1y2ceqxq54zq7ejrf3y0v7rtw5s6dhm6t5r899ptp4kj4u3fsfggqlv048x</code></h5>
-        <h2 id="upcoming-events">upcoming events</h2>
-        
-        <div>
-          <h4>29.05.2025 - Bitcoin, on reprend les bases.</h4>
-          <p>18.30 | Bitcoin basic for begginers</p>
-          <p>19.30 | Bitcoin advanced for Bitcoiners</p>
-        </div>
-        <h2 id="past-events">past events</h2>
-        <p>24.04.2025 - mempool (by bitcoin-schweiz.ch)</p>
-        <p>27.03.2025 - LNbits (by Eluc)</p>
-        <p>26.12.2024 - NO MEETUP (Holidays)</p>
-        <p>28.11.2024 - Bitcoin vs. Privacy: FIGHT!</p>
-        <p>31.10.2024 - Open discussions</a></p>
-        <p>26.09.2024 - Silent Payments / Zero-Knowlege Proofs</a></p>
-        <p>29.08.2024 - Lightning Network</a></p>
-        <p>25.07.2024 - Bitcoin BBQ [SUMMER BREAK]</a></p>
-        <p>27.06.2024 - Bitcoin (Open discussions)</a></p>
-        <p>30.05.2024 - Bitcoin et Ecologie, inconciliables? Table ronde sur le sujet brûlant de Bitcoin et de l'écologie.</a></p>
-        <p>30.05.2024 - Bitcoin for Beginners (FR) (by Nox.)</a></p>
-        <p>25.04.2024 - Bitcoin for Beginners (DE) + NFT (Non-fungible tokens)- mit <a href="https://footbloc.com/ueber-uns">Marco Heuberger</a></p>
-        <p>28.03.2024 - Bitcoin for Beginners (DE) by Jürg Kradolfer + open discussions</p> 
-        <p>29.02.2024 - Bitcoin dans la Constitution Suisse - "du BTC à la BNS" by <a href="https://twitter.com/ZLOK">Yves Bennaïm </a></p>
-          <ul>
-            <li>Twitter: <a href="https://twitter.com/initiativeBTC">@initiativeBTC</a></li>
-            <li>Telegram: <a href="https://t.me/initiativeBTC">@initiativeBTC</a></li>
-            <li>Survey: <a href="https://survey.initiativebtc.ch">Survey</a></li>
-          </ul>
-          </p>
-        <p>25.01.2024 - Vision and projects 2024</p>
-          
-          <h2 id="projects-ideas">projects and ideas</h2>
-          <p>Suggest and vote for projects and ideas</p>
-            <a href="https://feedback.userreport.com/82d937f0-b7eb-48d2-91cf-da3b5b4c7fcd/" onclick="event.preventDefault;urq.push(['Feedback_Open'])">Feedback</a>
+
+    <h2 id="upcoming-event" class="section-header">
+      <span class="icon">📅</span> Upcoming Event
+    </h2>
+
+    <div class="event-card">
+      <span class="event-date">Thursday, March 26, 2026</span>
+      <h3>Cashu: Introduction to E-Cash</h3>
+      <p><span class="highlight">18:30</span> — Bitcoin basic for beginners (on request)</p>
+      <p><span class="highlight">19:30</span> — Cashu: Introduction to private e-cash by <a href="https://primal.net/p/nprofile1qqsdmcway2x3nxpmxhcpls49zpsplswuy5upgdpyls924kz973q6xwsqcg7eq">Arándano</a> (English)</p>
+      <p><span class="highlight">CHF 12.--</span> (drink included)</p>
+      <p>📍 <a href="https://www.p15.space">P15 CoNetWorking</a> — Johan Aberli 15, 2503 Biel/Bienne</p>
     </div>
+
+    <h2 class="section-header">
+      <span class="icon">⚡</span> Latest from Nostr
+    </h2>
+    <div id="nostr-timeline" style="max-width: 100%; margin-bottom: 2rem; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--card-bg); border-radius: 16px; padding: 1rem;"></div>
+    <script type="module">
+      const PUBKEY = "22b1901814a881ecc869891ecf0d6ea434dbef4ba0ce528561ada55e45304a10";
+      const RELAYS = ["wss://relay.damus.io","wss://eden.nostr.land","wss://nostr.rocks"];
+      const LIMIT = 3;
+
+      const BECH = (function(){
+        const CHARSET='qpzry9x8gf2tvdw0s3jn54khce6mua7l';
+        function decodeBech(str){
+          const pos=str.lastIndexOf('1'); if(pos<1) return null;
+          const hrp=str.slice(0,pos); const dataStr=str.slice(pos+1);
+          const data=[]; for(let i=0;i<dataStr.length;i++){ const p=CHARSET.indexOf(dataStr[i]); if(p===-1) return null; data.push(p); }
+          return {hrp,data};
+        }
+        function convert(data, fromBits, toBits, pad=true){
+          let acc=0,bits=0,ret=[]; const maxv=(1<<toBits)-1;
+          for(let p=0;p<data.length;++p){ acc=(acc<<fromBits)|data[p]; bits+=fromBits; while(bits>=toBits){ bits-=toBits; ret.push((acc>>bits)&maxv); } }
+          if(pad){ if(bits) ret.push((acc<<(toBits-bits))&maxv); } else if(bits>=fromBits || ((acc<<(toBits-bits))&maxv)) return null;
+          return ret;
+        }
+        return {decodeBech,convert};
+      })();
+
+      function bechToBytes(bechPayload){
+        const arr = BECH.convert(bechPayload,5,8,false);
+        return arr ? new Uint8Array(arr) : null;
+      }
+
+      function nprofileToHex(nprofile){
+        try{
+          const d = BECH.decodeBech(nprofile);
+          if(!d || !d.hrp.startsWith('nprofile')) return null;
+          const bytes = bechToBytes(d.data);
+          if(!bytes || bytes.length<32) return null;
+          let i=0;
+          while(i < bytes.length){
+            const t = bytes[i++];
+            const l = bytes[i++];
+            if(t===0){
+              const pk = Array.from(bytes.slice(i,i+l)).map(b=>b.toString(16).padStart(2,'0')).join('');
+              return pk;
+            }
+            i += l;
+          }
+          return null;
+        }catch(e){ return null; }
+      }
+
+      function isNpub(s){ return typeof s==='string' && s.startsWith('npub'); }
+      function isNprofile(s){ return typeof s==='string' && s.startsWith('nprofile'); }
+      function isHex64(s){ return /^[0-9a-f]{64}$/i.test(s); }
+
+      const metaCache = new Map();
+      function fetchMeta(hex){
+        if(metaCache.has(hex)) return;
+        metaCache.set(hex, null);
+        RELAYS.forEach(url=>{
+          try{
+            const ws = new WebSocket(url);
+            ws.addEventListener('open', ()=> {
+              const sub='m-'+Math.random().toString(36).slice(2);
+              ws.send(JSON.stringify(['REQ', sub, {kinds:[0], authors:[hex], limit:1}]));
+            });
+            ws.addEventListener('message', ev=>{
+              try{
+                const msg = JSON.parse(ev.data);
+                if(msg[0] !== 'EVENT') return;
+                const e = msg[2];
+                if(e.kind !== 0) return;
+                try{ const m = JSON.parse(e.content||'{}'); metaCache.set(hex, m); }
+                catch(err){ metaCache.set(hex, {}); }
+              }catch(_){} 
+            });
+            setTimeout(()=>ws.close(),3000);
+          }catch(_){} 
+        });
+      }
+
+      function shortHex(hex){ return hex.slice(0,12)+'...'+hex.slice(-8); }
+
+      function maxLength(str, len){ return str.length > len ? str.slice(0, len-3)+'...' : str; }
+
+      function makeProfileLinkFromHex(hex){
+        fetchMeta(hex);
+        const meta = metaCache.get(hex);
+        const name = meta && (meta.name || meta.display_name) ? escapeHtml(meta.name||meta.display_name) : escapeHtml(shortHex(hex));
+        const display = maxLength(name, 80);
+        return `<a href="https://primal.net/p/${hex}" target="_blank" rel="noopener noreferrer" style="color: #f7931a;">${display}</a>`;
+      }
+
+      function escapeHtml(s){ return String(s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+
+      function processContent(text){
+        return escapeHtml(text)
+          .replace(/(nprofile[0-9a-z]+|npub[0-9a-z]+|\b[0-9a-f]{64}\b)/ig, (m)=>{
+            const token = m.trim();
+            if(isNprofile(token)){
+              const hex = nprofileToHex(token);
+              if(hex) return makeProfileLinkFromHex(hex);
+              return escapeHtml(token);
+            }
+            if(isNpub(token)){
+              return `<a href="https://primal.net/p/${token}" target="_blank" rel="noopener noreferrer" style="color: #f7931a;">${escapeHtml(token)}</a>`;
+            }
+            if(isHex64(token)){
+              return makeProfileLinkFromHex(token.toLowerCase());
+            }
+            return escapeHtml(token);
+          })
+          .replace(/(https?:\/\/[^\s]+)/g, url => `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" style="color: #f7931a;">${escapeHtml(url)}</a>`)
+          .replace(/\n/g,'<br>');
+      }
+
+      function createItem(ev){
+        const time = new Date(ev.created_at*1000).toLocaleString();
+        const noteLink = `https://primal.net/e/${ev.id}`;
+        const authorLink = (()=>{ const display = escapeHtml(shortHex(PUBKEY)); return `<a href="https://primal.net/p/${PUBKEY}" target="_blank" rel="noopener noreferrer" style="color: #f7931a;">${display}</a>` })();
+        const contentHtml = processContent(ev.content||'');
+        const html = `
+          <article id="note-${ev.id}" style="padding:12px;border-bottom:1px solid var(--card-border)">
+            <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px">${time} — ${authorLink}</div>
+            <div style="margin-bottom:8px;line-height:1.4;color:var(--text-light)">${contentHtml}</div>
+            <div style="display:flex;gap:8px">
+              <button data-action="reply" style="padding:6px 10px;border:1px solid var(--card-border);background:var(--card-bg);border-radius:6px;cursor:pointer;color:var(--text-light)">Reply</button>
+              <button data-action="boost" style="padding:6px 10px;border:1px solid var(--card-border);background:var(--card-bg);border-radius:6px;cursor:pointer;color:var(--text-light)">Boost</button>
+              <button data-action="zap" style="padding:6px 10px;border:1px solid var(--card-border);background:var(--card-bg);border-radius:6px;cursor:pointer;color:var(--text-light)">Zap</button>
+              <a href="${noteLink}" target="_blank" rel="noopener noreferrer" style="margin-left:auto;color:#f7931a;text-decoration:none;font-size:0.9rem">Open in Primal</a>
+            </div>
+          </article>`;
+        const div = document.createElement('div');
+        div.innerHTML = html;
+        const node = div.firstElementChild;
+        node.querySelector('button[data-action="reply"]').addEventListener('click', ()=> window.open(noteLink+'?reply=1','_blank','noopener'));
+        node.querySelector('button[data-action="boost"]').addEventListener('click', ()=> window.open(noteLink+'?boost=1','_blank','noopener'));
+        node.querySelector('button[data-action="zap"]').addEventListener('click', ()=> window.open(noteLink+'?zap=1','_blank','noopener'));
+        return node;
+      }
+
+      const container = document.getElementById('nostr-timeline');
+      const seen = new Set();
+      RELAYS.forEach(url=>{
+        try{
+          const ws = new WebSocket(url);
+          ws.addEventListener('open', ()=> ws.send(JSON.stringify(['REQ','sub-'+Math.random().toString(36).slice(2),{kinds:[1],authors:[PUBKEY],limit:LIMIT}])));
+          ws.addEventListener('message', e=>{
+            try{
+              const msg = JSON.parse(e.data); if(msg[0] !== 'EVENT') return;
+              const ev = msg[2]; if(ev.kind!==1) return;
+              if(seen.has(ev.id)) return; seen.add(ev.id);
+              const node = createItem(ev); container.appendChild(node);
+              while(container.querySelectorAll('article').length > LIMIT) container.removeChild(container.firstElementChild);
+            }catch(_){} 
+          });
+        }catch(_){} 
+      });
+    </script>
+
+    <h2 class="section-header">
+      <span class="icon">📜</span> Past Events
+    </h2>
+    <div class="past-events">
+      <ul>
+        <li><span class="date">29.05.2025</span><span>Bitcoin, on reprend les bases.</span></li>
+        <li><span class="date">24.04.2025</span><span>mempool (by bitcoin-schweiz.ch)</span></li>
+        <li><span class="date">27.03.2025</span><span>LNbits (by Eluc)</span></li>
+        <li><span class="date">28.11.2024</span><span>Bitcoin vs. Privacy: FIGHT!</span></li>
+        <li><span class="date">26.09.2024</span><span>Silent Payments / Zero-Knowledge Proofs</span></li>
+        <li><span class="date">29.08.2024</span><span>Lightning Network</span></li>
+        <li><span class="date">30.05.2024</span><span>Bitcoin et Ecologie (Table ronde)</span></li>
+      </ul>
+    </div>
+
+    <h2 class="section-header">
+      <span class="icon">🎨</span> Projects & Ideas
+    </h2>
+    <div class="card" style="margin-bottom: 3rem;">
+      <p>Suggest and vote for projects and ideas</p>
+      <a href="https://feedback.userreport.com/82d937f0-b7eb-48d2-91cf-da3b5b4c7fcd/" class="contact-btn dark-text" style="margin-top: 1rem;">
+        <span>📝</span> Give Feedback
+      </a>
+    </div>
+
+    <div class="sats-section">
+      <h2>⚡ Sats help us to continue</h2>
+      <p>Scan with any Lightning wallet to support our meetups</p>
+      <div class="qr-container">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=LNURL1DP68GURN8GHJ7AMPD3KX2AR0VEEKZAR0WD5XJTNRDAKJ7TNHV4KXCTTTDEHHWM30D3H82UNVWQHKSATJWF5K2ERNW3EX2CTD8Q6S9M03Y9" alt="Lightning QR Code">
+      </div>
+      <p class="lnurl">
+        <a href="lightning:LNURL1DP68GURN8GHJ7AMPD3KX2AR0VEEKZAR0WD5XJTNRDAKJ7TNHV4KXCTTTDEHHWM30D3H82UNVWQHKSATJWF5K2ERNW3EX2CTD8Q6S9M03Y9">LNURL1DP68GURN8GHJ7AMPD3KX2AR0VEEKZAR0WD5XJTNRDAKJ7TNHV4KXCTTTDEHHWM30D3H82UNVWQHKSATJWF5K2ERNW3EX2CTD8Q6S9M03Y9</a>
+      </p>
+    </div>
+
+    <footer>
+      <p>Made with ⚡ for the Bitcoin community</p>
+    </footer>
   </div>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const icon = document.getElementById('theme-icon');
+      
+      if (html.getAttribute('data-theme') === 'light') {
+        html.removeAttribute('data-theme');
+        icon.textContent = '🌙';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        html.setAttribute('data-theme', 'light');
+        icon.textContent = '☀️';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+      document.getElementById('theme-icon').textContent = '☀️';
+    }
+  </script>
 </body>
 
 </html>
-
