@@ -68,6 +68,38 @@
       transform: scale(1.1);
     }
 
+    .lang-toggle {
+      position: fixed;
+      top: 4.5rem;
+      right: 1rem;
+      z-index: 1000;
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .lang-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 0.4rem 0.6rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn:hover {
+      border-color: var(--btc-orange);
+      color: var(--btc-orange);
+    }
+
+    .lang-btn.active {
+      background: var(--btc-orange);
+      border-color: var(--btc-orange);
+      color: #fff;
+    }
+
     .container {
       max-width: 900px;
       margin: 0 auto;
@@ -422,12 +454,17 @@
   <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
     <span id="theme-icon">🌙</span>
   </button>
+  <div class="lang-toggle">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="de">DE</button>
+    <button class="lang-btn" data-lang="fr">FR</button>
+  </div>
   <div class="container">
     <header>
       <img src="https://image.nostr.build/19653bc1e8d05270a620992db27f765ef5ee642179cb020dd9d9a88951763035.jpg" alt="Bitcoin Biel/Bienne Logo" class="logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
       <div class="logo" style="display:none">₿</div>
       <h1>Bitcoin <span>Biel/Bienne</span></h1>
-      <p class="subtitle">Every last Thursday of the Month in Biel/Bienne — All about Bitcoin tech</p>
+      <p class="subtitle" data-i18n="subtitle">Every last Thursday of the Month in Biel/Bienne — All about Bitcoin tech</p>
       
       <div class="contact-links">
         <a href="https://t.me/+M3KFrnmQ3vRlMTE0" class="contact-btn" target="_blank" rel="noopener noreferrer">
@@ -441,22 +478,22 @@
 
     <div class="info-grid">
       <div class="card">
-        <h3>📍 Location</h3>
+        <h3>📍 <span data-i18n="location">Location</span></h3>
         <p><a href="https://www.p15.space" target="_blank" rel="noopener noreferrer">P15 CoWorking</a></p>
         <p>Johan Aberli 15, 2503 Biel/Bienne</p>
         <p><a href="https://www.openstreetmap.org/node/10210421015" target="_blank" rel="noopener noreferrer">OpenStreetMap</a></p>
       </div>
       
       <div class="card">
-        <h3>🕐 Schedule</h3>
-        <p><strong>18:30</strong> — Intro talks for Bitcoin explorers</p>
-        <p><strong>19:30</strong> — Specialists talk and workshops</p>
-        <p><a href="#upcoming-event">See Upcoming Event →</a></p>
+        <h3>🕐 <span data-i18n="schedule">Schedule</span></h3>
+        <p><strong>18:30</strong> — <span data-i18n="intro">Intro talks for Bitcoin explorers</span></p>
+        <p><strong>19:30</strong> — <span data-i18n="specialist">Specialists talk and workshops</span></p>
+        <p><a href="#upcoming-event"><span data-i18n="seeUpcoming">See Upcoming Event →</span></a></p>
       </div>
     </div>
 
     <h2 id="upcoming-event" class="section-header">
-      <span class="icon">📅</span> Upcoming Event
+      <span class="icon">📅</span> <span data-i18n="upcomingEvent">Upcoming Event</span>
     </h2>
 
     <div class="event-card">
@@ -469,12 +506,12 @@
     </div>
 
     <h2 class="section-header">
-      <span class="icon">⚡</span> Latest from Nostr
+      <span class="icon">⚡</span> <span data-i18n="nostrTitle">Latest from Nostr</span>
     </h2>
     <div id="nostr-timeline">
       <div class="nostr-loading">
         <div class="spinner"></div>
-        <p>Loading from Nostr...</p>
+        <p data-i18n="nostrLoading">Loading from Nostr...</p>
       </div>
     </div>
     <script type="module">
@@ -815,7 +852,7 @@
     </script>
 
     <h2 class="section-header">
-      <span class="icon">📜</span> Past Events
+      <span class="icon">📜</span> <span data-i18n="pastEvents">Past Events</span>
     </h2>
     <div class="past-events">
       <ul>
@@ -830,18 +867,18 @@
     </div>
 
     <h2 class="section-header">
-      <span class="icon">🎨</span> Projects & Ideas
+      <span class="icon">🎨</span> <span data-i18n="projects">Projects & Ideas</span>
     </h2>
     <div class="card" style="margin-bottom: 3rem;">
-      <p>Suggest and vote for projects and ideas</p>
+      <p data-i18n="projectsText">Suggest and vote for projects and ideas</p>
       <a href="https://github.com/silent-nox/silent-nox.github.io/issues/new/choose" class="contact-btn dark-text" style="margin-top: 1rem;" target="_blank" rel="noopener noreferrer">
-        <span>📝</span> Give Feedback
+        <span>📝</span> <span data-i18n="feedback">Give Feedback</span>
       </a>
     </div>
 
     <div class="sats-section">
-      <h2>⚡ Sats help us to continue</h2>
-      <p>Scan with any Lightning wallet to support our meetups</p>
+      <h2>⚡ <span data-i18n="satsTitle">Sats help us to continue</span></h2>
+      <p data-i18n="satsText">Scan with any Lightning wallet to support our meetups</p>
       <div class="qr-container">
         <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=LNURL1DP68GURN8GHJ7AMPD3KX2AR0VEEKZAR0WD5XJTNRDAKJ7TNHV4KXCTTTDEHHWM30D3H82UNVWQHKSATJWF5K2ERNW3EX2CTD8Q6S9M03Y9" alt="Lightning QR Code">
       </div>
@@ -888,6 +925,87 @@
         localStorage.setItem('theme', 'light');
       }
     }
+
+    const translations = {
+      en: {
+        subtitle: "Every last Thursday of the Month in Biel/Bienne — All about Bitcoin tech",
+        location: "Location",
+        schedule: "Schedule",
+        intro: "Intro talks for Bitcoin explorers",
+        specialist: "Specialists talk and workshops",
+        seeUpcoming: "See Upcoming Event →",
+        upcomingEvent: "Upcoming Event",
+        nostrTitle: "Latest from Nostr",
+        pastEvents: "Past Events",
+        projects: "Projects & Ideas",
+        projectsText: "Suggest and vote for projects and ideas",
+        feedback: "Give Feedback",
+        satsTitle: "Sats help us to continue",
+        satsText: "Scan with any Lightning wallet to support our meetups",
+        nostrLoading: "Loading from Nostr...",
+        nostrError: "Unable to load from Nostr"
+      },
+      de: {
+        subtitle: "Jeden letzten Donnerstag des Monats in Biel/Bienne — Alles über Bitcoin-Technik",
+        location: "Ort",
+        schedule: "Zeitplan",
+        intro: "Einführungsgespräche für Bitcoin-Entdecker",
+        specialist: "Fachvorträge und Workshops",
+        seeUpcoming: "Kommendes Event ansehen →",
+        upcomingEvent: "Kommendes Event",
+        nostrTitle: "Aktuelles von Nostr",
+        pastEvents: "Vergangene Events",
+        projects: "Projekte & Ideen",
+        projectsText: "Projekte und Ideen vorschlagen und abstimmen",
+        feedback: "Feedback geben",
+        satsTitle: "Sats helfen uns weiterzumachen",
+        satsText: "Scannen Sie mit einem Lightning-Wallet, um unsere Treffen zu unterstützen",
+        nostrLoading: "Lade von Nostr...",
+        nostrError: "Konnte nicht von Nostr laden"
+      },
+      fr: {
+        subtitle: "Dernier jeudi du mois à Biel/Bienne — Tout sur la technique Bitcoin",
+        location: "Lieu",
+        schedule: "Horaire",
+        intro: "Présentations pour découvreurs de Bitcoin",
+        specialist: "Présentations spécialisées et ateliers",
+        seeUpcoming: "Voir l'événement à venir →",
+        upcomingEvent: "Événement à venir",
+        nostrTitle: "Dernier de Nostr",
+        pastEvents: "Événements passés",
+        projects: "Projets & Idées",
+        projectsText: "Proposez et votez pour des projets et idées",
+        feedback: "Donner votre avis",
+        satsTitle: "Les sats nous aident à continuer",
+        satsText: "Scannez avec un portefeuille Lightning pour soutenir nos réunions",
+        nostrLoading: "Chargement depuis Nostr...",
+        nostrError: "Impossible de charger depuis Nostr"
+      }
+    };
+
+    function setLanguage(lang) {
+      localStorage.setItem('lang', lang);
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+    });
+
+    (function() {
+      const savedLang = localStorage.getItem('lang');
+      if (savedLang && translations[savedLang]) {
+        setLanguage(savedLang);
+      }
+    })();
   </script>
 </body>
 
